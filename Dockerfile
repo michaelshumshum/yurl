@@ -13,7 +13,3 @@ WORKDIR /app
 RUN pip install -r requirements.txt --break-system-packages
 
 WORKDIR /
-
-EXPOSE 8888
-
-CMD ["gunicorn", "--bind", "0.0.0.0:8888", "app.main:app"]

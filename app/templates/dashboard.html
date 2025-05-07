@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+
+    <title>Yurl</title>
+    <meta name="description" content="Yurl" />
+
+    <link
+      href="{{ url_for('static', filename='style.css') }}"
+      rel="stylesheet"
+    />
+
+    <script
+      src="{{ url_for('static', filename='dashboard.js') }}"
+      defer
+    ></script>
+  </head>
+
+  <body>
+    <div id="dashboard">
+      <div id="header">
+        <h1>Yurl</h1>
+        <div>
+          <h3>
+            Signed in as
+            <span style="text-decoration: underline">{{ g.username }}</span>
+          </h3>
+          <button id="sign-out">Sign Out</button>
+        </div>
+      </div>
+      <div id="content">
+        <form id="create-container">
+          <h2>New Shortened URL</h2>
+          <p id="message" class="hidden"></p>
+          <div>
+            <label for="url">URL:</label>
+            <input
+              type="text"
+              id="url"
+              name="url"
+              placeholder="http://example.com"
+              required
+            />
+          </div>
+          <div>
+            <label for="expiration">Expiration:</label>
+            {% if config.MAX_LINK_EXPIRY == 0 %}
+            <input type="checkbox" name="expiration-enable" checked />
+            {% endif %}
+            <input
+              type="datetime-local"
+              id="expiration"
+              name="expiration"
+              step="60"
+              min="{{ (datetime.now() + timedelta(seconds=config.LINK_EXPIRY)).timestamp() }}"
+              value="{{ (datetime.now() + timedelta(seconds=config.LINK_EXPIRY)).timestamp() }}"
+              max="{{ (datetime.now() + timedelta(seconds=config.MAX_LINK_EXPIRY)).timestamp() }}"
+            />
+          </div>
+          <button type="submit">Create</button>
+        </form>
+        <div id="links">
+          <h3>ID</h3>
+          <h3>URL</h3>
+          <h3>Created</h3>
+          <h3>Expires</h3>
+          {% for link in links %}
+          <a href="/{{ link.id }}">{{ link.id }}</a>
+          <a href="{{ link.url }}">{{ link.url }}</a>
+          <span class="timestamp">{{ link.creation_date }}</span>
+          <span class="timestamp">{{ link.expiration_date }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

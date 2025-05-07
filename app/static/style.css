@@ -1,0 +1,214 @@
+:root {
+  --highlight-1: #c9a43e;
+  --highlight-2: #f08c3a;
+  --secondary-1: #3a9cf0;
+  --secondary-2: #536370;
+  --background: #111111;
+  --foreground-1: #222222;
+  --foreground-2: #444444;
+  --text-color: white;
+}
+
+* {
+  font-family: monospace;
+  margin: 0;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  padding: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+/* login */
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background: var(--background);
+}
+
+#login-form {
+  width: 40vw;
+  padding: 6em 3em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--foreground-1);
+  gap: 1em;
+  border-radius: 1em;
+  margin: auto;
+}
+
+#login-form > h1 {
+  text-align: center;
+  margin: 0;
+  font-size: 48px;
+  color: var(--text-color);
+}
+
+input:not([type="checkbox"]) {
+  width: 100%;
+  padding: 0.5em;
+  border: none;
+  background: var(--foreground-2);
+  color: var(--text-color);
+  border-radius: 0.5em;
+}
+
+input:focus {
+  outline: none;
+  border: none;
+}
+
+button {
+  width: 100%;
+  padding: 0.5em;
+  border: none;
+  background: var(--secondary-2);
+  color: white;
+  cursor: pointer;
+  border-radius: 0.5em;
+}
+
+button:hover,
+button:focus {
+  background: var(--highlight-1);
+  border: none;
+  outline: none;
+}
+
+#message {
+  color: var(--text-color);
+  background: var(--highlight-1);
+  width: 100%;
+  padding: 0.5em;
+  overflow: hidden;
+  border-radius: 0.5em;
+}
+
+#message.hidden {
+  padding: 0 0.5em;
+  height: 0;
+}
+
+/* dashboard */
+#dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background: var(--background);
+  width: 100%;
+}
+
+#dashboard > #header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: var(--secondary-2);
+  color: white;
+  font-weight: bold;
+  padding: 1em 5em;
+}
+
+#dashboard > #header > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+#dashboard > #header > div > h3 {
+  margin: auto;
+  text-wrap: nowrap;
+}
+
+#dashboard > #header > div > button:not(:hover) {
+  background: var(--highlight-2);
+}
+
+#dashboard > #content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1em;
+  padding: 2em;
+  width: 100%;
+}
+
+#dashboard > #content > * {
+  border-radius: 1em;
+}
+
+#create-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  background: var(--foreground-1);
+  color: var(--text-color);
+  font-weight: bold;
+  padding: 2em;
+  gap: 1em;
+}
+
+#create-container > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 1em;
+}
+
+#expiration.hidden {
+  width: 0;
+  padding: 0.5em 0;
+}
+
+#links {
+  background: var(--foreground-1);
+  display: grid;
+  grid-template-columns: 1fr 3fr 3fr 3fr;
+  grid-template-rows: min-content;
+  gap: 0.5em 0.25em;
+  padding: 2em;
+}
+
+#links > h3 {
+  border-bottom: 2px solid white;
+  margin: 0;
+}
+
+#links > * {
+  color: var(--text-color);
+}
+
+#links > a {
+  word-wrap: break-word;
+  line-break: anywhere;
+}
+
+@media (max-width: 768px) {
+  #login-form {
+    width: 100%;
+  }
+  #dashboard > #content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: #f1f1f1;
+    --foreground-1: white;
+    --foreground-2: #f1f1f1;
+    --text-color: black;
+  }
+}

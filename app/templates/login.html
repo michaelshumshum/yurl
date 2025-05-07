@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+
+    <title>Yurl</title>
+    <meta name="description" content="Yurl" />
+
+    <link
+      href="{{ url_for('static', filename='style.css') }}"
+      rel="stylesheet"
+    />
+    <script src="{{ url_for('static', filename='login.js') }}" defer></script>
+  </head>
+
+  <body>
+    <div id="login-form">
+      <h1>Yurl</h1>
+      <p id="message" class="hidden"></p>
+      <input id="username" type="text" placeholder="Username" />
+      <input id="password" type="password" placeholder="Password" />
+      <button type="submit">Login</button>
+    </div>
+  </body>
+</html>

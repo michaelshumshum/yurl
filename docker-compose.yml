@@ -1,0 +1,39 @@
+services:
+  web:
+    container_name: web
+    build: .
+    depends_on:
+      - db
+    environment:
+      DB_URL: postgresql://postgres:postgres@db:5432/postgres
+    ports:
+      - "8888:8888"
+    command: gunicorn -c gunicorn.config.py app.main:app
+    develop:
+      watch:
+        - path: ./app
+          target: /app/
+          action: sync+restart
+          ignore:
+            - static/
+        - path: ./app/static
+          target: /app/static
+          action: sync
+
+  db:
+    container_name: postgres
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
+
+networks:
+  backend:
+    driver: bridge

@@ -157,6 +157,29 @@ def get_link(id: str):
         return redirect(link.url)
 
 
+@app.route("/<string:id>", methods=["DELETE"])
+@auth_provider.authorization(deny=True)
+def delete_link(id: str):
+    """
+    Deletes the link associated with the given id.
+
+    :param id: str
+    :return: dict
+    """
+    with database.get_session() as session:
+        link = (
+            session.query(Link).filter(Link.id == id, Link.user == g.username).first()
+        )
+
+        if link is None:
+            abort(404)
+
+        session.delete(link)
+        session.commit()
+
+        return {"message": "link deleted"}, 200
+
+
 @app.route("/new/<path:url>", methods=["POST"])
 @auth_provider.authorization(deny=True)
 def create_link(url: str):

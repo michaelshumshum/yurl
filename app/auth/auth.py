@@ -82,6 +82,8 @@ class AuthProvider:
     def authorization(self, deny: bool = False) -> Callable[[T_route], T_route]:
         """
         Decorator for routes that require authentication.
+
+        If the user is authenticated, the session is stored in `g.username`, which represents the currently logged in user's username.
         """
 
         def decorator(func: T_route) -> T_route:

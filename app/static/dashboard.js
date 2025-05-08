@@ -93,3 +93,18 @@ for (const element of document.querySelectorAll(
   date.setUTCSeconds(Number.parseInt(element.getAttribute("max")) - tzoffset);
   element.setAttribute("max", date.toISOString().replace(/\.[0-9]{3}Z/, ""));
 }
+
+for (const element of document.querySelectorAll("span.delete")) {
+  element.addEventListener("click", () => {
+    if (!window.confirm("Are you sure you want to delete this link?")) {
+      return;
+    }
+
+    const id = element.getAttribute("data-id");
+    fetch(`/${id}`, {
+      method: "DELETE",
+    }).then(() => {
+      window.location.reload();
+    });
+  });
+}

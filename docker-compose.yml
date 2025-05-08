@@ -1,23 +1,35 @@
 services:
   web:
-    container_name: web
+    container_name: flask
     build: .
     depends_on:
       - db
     environment:
       DB_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      FLASK_ENV: production
     ports:
       - "8888:8888"
+    profiles:
+      - production
     command: gunicorn -c gunicorn.config.py app.main:app
+  web-dev:
+    container_name: flask-dev
+    build: .
+    depends_on:
+      - db
+    environment:
+      DB_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      FLASK_ENV: development
+      FLASK_DEBUG: 1
+    ports:
+      - "8888:8888"
+    profiles:
+      - development
+    command: flask --app app.main run --host=0.0.0.0 --reload --port=8888
     develop:
       watch:
         - path: ./app
           target: /app/
-          action: sync+restart
-          ignore:
-            - static/
-        - path: ./app/static
-          target: /app/static
           action: sync
 
   db:

@@ -1,3 +1,2 @@
 #!/bin/bash
-
-docker-compose up --watch --build
+COMPOSE_PROFILES=development docker-compose up --watch --build
